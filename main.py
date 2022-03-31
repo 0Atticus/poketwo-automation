@@ -26,10 +26,20 @@ while True:
         pyautogui.dragTo(790, 660, button="left")
         pyautogui.hotkey("ctrl", "c", interval=0.1)
         data = pyperclip.paste()
+
         try:
             new_data = data.split("is")[1]
         except:
+            for i in range(20):
+                pyautogui.write("X")
+                pyautogui.press("return")
+                time.sleep(1.5)
+                pass
+            X
+            
+        if "♂️" in data or "♀️" in data:
             pass
+
         pyperclip.copy(new_data)
         pyautogui.hotkey("alt", "p", interval=0.1)
         time.sleep(1)
