@@ -24,19 +24,13 @@ fn main() {
     }
 
     println!("{:?}", possibilities);
-    if possibilities.iter().filter(|&best_word| *best_word == best_word.to_owned()).count() >= 10 {
-        let notify = Command::new("zenity")
-        .args(["--notification", &format!("--text='{}'", best_word)])
-        .spawn()
-        .expect("nope");
-        let fuck_clipboards_in_rust = Command::new("python3")
-        .args(["copy.py", &format!("{}", best_word)])
-        .spawn()
-        .expect("nonon");
-    } else {
-        let notify = Command::new("zenity")
-        .args(["--notification", "--text='unsure'"])
-        .spawn()
-        .expect("nope");
+    let mut best: (&str, i32) = ("", 0);
+    for i in 0..(possibilities.len() as i32) {
+        let count = possibilities.iter().filter(|&n| *n == possibilities[i as usize]).count();
+        if possibilities[i as usize] != best.0 && count as i32 > best.1 && possibilities[i as usize] != "s" {
+            best = (&possibilities[i as usize], count as i32);
+        }
     }
+    let notify = Command::new("zenity").args(["--notification", &format!("--text='{}'", best.0)]).spawn().expect("nope");
+    let copy = Command::new("python3").args(["copy.py", &format!("{}", best.0)]).spawn().expect("nope");
 }

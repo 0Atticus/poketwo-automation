@@ -24,10 +24,12 @@ pub fn read_file(word: &str) -> (String, i32) {
     let line = line.unwrap();
 
     if line.chars().count() == word.chars().count() {
-      
+      // Che__l_.
       for (b, i) in word.chars().enumerate() {
         if i == line.chars().nth(b).unwrap() {
           word_score += 1
+        } else {
+          word_score -= 1;
         }
       }
 
